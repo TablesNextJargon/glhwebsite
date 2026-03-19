@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "date": "22.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) TBA",
+    "city": "Tokyo (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "23.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) TBA",
+    "city": "Tokyo (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "24.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) TBA",
+    "city": "Tokyo (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "25.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) Stiff Slack",
+    "city": "Nagoya (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "27.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) Hard Rain",
+    "city": "Osaka (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "28.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) Brothers&Sisters",
+    "city": "Kobe (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "29.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) Cloud Nine",
+    "city": "Chiba (JP)",
+    "band": "NEST",
+    "link": ""
+  },
+  {
+    "date": "30.05.2026",
+    "venue": "NEST (w/Andreas Fulgosi, guitar) Chop",
+    "city": "Tokyo (JP)",
+    "band": "NEST",
+    "link": ""
+  }
+]
