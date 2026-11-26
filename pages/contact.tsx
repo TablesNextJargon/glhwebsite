@@ -108,9 +108,8 @@ export default function Contact() {
         <Navigation />
         <main className="contact-content">
           <h1>Get in touch</h1>
-          <p className="form-help" id="contact-help">All fields are required.</p>
           <form action="/api/contact" method="post" onSubmit={handleSubmit}
-            aria-describedby="contact-help" aria-busy={isSubmitting}>
+            aria-busy={isSubmitting}>
             <fieldset disabled={isSubmitting}>
               <legend className="sr-only">Your enquiry</legend>
               <div className="contact-row">
