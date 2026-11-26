@@ -76,10 +76,6 @@ export default function About() {
           }}>
             <h1 style={{ color: 'var(--heading-color)', marginTop: 0, marginBottom: '1rem', fontSize: '1.1rem' }}>Biography</h1>
             <p style={{ color: 'var(--secondary-text)', lineHeight: '1.6', fontSize: '0.95rem' }}>
-             George Hadow represents the newest wave of improvisers to hit the Dutch scene. Like many of the active newcomers, George is an expat, hailing from Devon in the UK. George first came to the Netherlands in 2011 to take part in the Dutch Impro Academy, where he studied with Han Bennink and Michael Moore, among others. He has quickly developed into a mature musician, playing with acute sensitivity as well as unbridled power.
-           </p>
-
-            <p style={{ color: 'var(--secondary-text)', lineHeight: '1.6', fontSize: '0.95rem' }}>
              Based in Amsterdam since June 2012, George has established himself as a prominent figure in the European avant-garde and improvisational music scene. His innovative approach to rhythm and percussion has led to collaborations across diverse musical projects.
            </p>
          </div>

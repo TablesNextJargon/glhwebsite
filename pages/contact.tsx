@@ -108,8 +108,7 @@ export default function Contact() {
         <Navigation />
         <main className="contact-content">
           <h1>Get in touch</h1>
-          <p>For bookings, collaborations, press, or questions about George’s music and performances.</p>
-          <p className="form-help" id="contact-help">All fields are required. Your email is used to reply to your enquiry.</p>
+          <p className="form-help" id="contact-help">All fields are required.</p>
           <form action="/api/contact" method="post" onSubmit={handleSubmit}
             aria-describedby="contact-help" aria-busy={isSubmitting}>
             <fieldset disabled={isSubmitting}>
