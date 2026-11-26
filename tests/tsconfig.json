@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "esModuleInterop": true,
+    "types": ["node"],
+    "strict": false,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "rootDir": "..",
+    "noEmitOnError": true,
+    "outDir": "../.next/hardening-tests"
+  },
+  "include": ["hardening.test.ts"],
+  "exclude": ["../node_modules"]
+}

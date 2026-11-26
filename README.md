@@ -56,7 +56,7 @@ george-hadow-concerts/
 ├── pages/
 │   ├── index.js          # Home page with concert display and manual management
 │   └── api/
-│       └── gigs.js       # API route for scraping concert data
+│       └── gigs.ts       # Development adapter for the shared concert loader
 ├── public/               # Static assets
 ├── package.json          # Dependencies and scripts
 ├── next.config.js        # Next.js configuration
@@ -137,6 +137,31 @@ The apex domain redirects to `www`. Next.js exports static pages to `out/`;
 Pages Functions in `functions/api/` provide the live concert API and contact form.
 Concert data is cached at the edge for up to 24 hours and refreshed in the browser.
 The exported concert page provides initial content before the live refresh.
+
+`lib/concerts.js` is the authoritative scraper for the build, development API,
+and Pages Function. Manual gigs from `data/concerts-manual.json` and
+`public/concerts.txt` are merged and deduplicated before chronological sorting.
+Text entries use the documented `Date|Venue|City|Link` format and default to KUHN FU.
+The build and development API read the text file from disk; Pages reads the current
+deployed asset on every API request. Only scraped gigs enter the 24-hour edge cache.
+
+Security headers for exported pages and assets live in `public/_headers`.
+`functions/api/_middleware.ts` applies the matching policy to API responses,
+including contact errors and redirects, because Pages asset rules do not cover
+Functions. HSTS is scoped to the production domains without `includeSubDomains`
+or preload. Local HTTP development does not require HSTS.
+
+The CSP allows same-origin resources and API calls, YouTube frames and thumbnails,
+and Cloudflare Turnstile scripts, frames, and connections. Inline scripts remain
+allowed for the pre-paint theme initializer, existing structured data, and Next.js
+inline output; inline styles remain allowed for React styles and styled-jsx.
+This is a baseline policy, not a nonce-based strict CSP. There is no `unsafe-eval`.
+The theme initializer reads `localStorage.theme` (`light` or `dark`) before the body
+paints, falling back to the system preference when unset, invalid, or inaccessible.
+The React provider follows system changes only when no valid preference is saved.
+There is currently no on-page theme toggle.
+
+Run `npm run test:hardening` for focused theme, policy, and concert-loading checks.
 
 ### Deploy an update
 

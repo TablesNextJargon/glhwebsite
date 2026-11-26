@@ -1,9 +1,13 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
+import { themeInitializationScript } from '../lib/theme-init';
+
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Blocking by design: apply the theme before the body can paint. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

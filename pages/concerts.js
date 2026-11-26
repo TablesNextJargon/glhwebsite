@@ -6,15 +6,6 @@ import SEO from '../components/SEO';
 import Logo from '../components/Logo';
 import Navigation from '../components/Navigation';
 
-export const revalidate = 86400; // 24 hours
-
-export async function generateMetadata() {
-  return {
-    title: 'Concerts & Performances | George Hadow',
-    description: 'Upcoming and past live performances by George Hadow. Concert dates, venues, and booking information for avant-garde music shows.'
-  };
-}
-
 export default function ConcertsPage({ upcoming: initialUpcoming, past: initialPast }) {
   const [{ upcoming, past }, setConcerts] = useState({
     upcoming: initialUpcoming,
@@ -144,7 +135,8 @@ export default function ConcertsPage({ upcoming: initialUpcoming, past: initialP
 
 export async function getStaticProps() {
   try {
-    const allConcerts = await getAllConcerts();
+    const { readManualConcertText } = await import('../lib/manual-concert-file');
+    const allConcerts = await getAllConcerts(await readManualConcertText());
     const { upcoming, past } = categorizeGigs(allConcerts);
 
     return {

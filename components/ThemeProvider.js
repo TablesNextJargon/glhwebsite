@@ -5,11 +5,10 @@ export default function ThemeProvider({ children }) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const updateTheme = () => {
-      if (mediaQuery.matches) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      let theme;
+      try { theme = window.localStorage.getItem('theme'); } catch {}
+      document.documentElement.classList.toggle('dark',
+        theme === 'dark' || (theme !== 'light' && mediaQuery.matches));
     };
 
     // Set initial theme
@@ -17,9 +16,13 @@ export default function ThemeProvider({ children }) {
 
     // Listen for changes
     mediaQuery.addEventListener('change', updateTheme);
+    window.addEventListener('storage', updateTheme);
 
     // Cleanup
-    return () => mediaQuery.removeEventListener('change', updateTheme);
+    return () => {
+      mediaQuery.removeEventListener('change', updateTheme);
+      window.removeEventListener('storage', updateTheme);
+    };
   }, []);
 
   return children;

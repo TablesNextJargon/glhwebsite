@@ -1,7 +1,9 @@
 import { loadManualConcerts, scrapeConcerts, sortGigsByDate } from '../../lib/concerts';
+import { mergeGigs } from '../../lib/concert-dates';
 
 interface GigsContext {
   request: Request;
+  env: { ASSETS: { fetch(request: Request): Promise<Response> } };
   waitUntil(promise: Promise<unknown>): void;
 }
 
@@ -10,7 +12,7 @@ declare const caches: CacheStorage & { default: Cache };
 
 type Gig = Awaited<ReturnType<typeof scrapeConcerts>>[number];
 
-// Only scraped gigs are cached. Manual gigs live in data/concerts-manual.json
+// Only scraped gigs are cached. Manual gigs live in JSON and public/concerts.txt
 // and are merged on every request, so a stale edge entry can never hide them.
 const SCRAPED_CACHE_KEY = '/api/gigs/scraped';
 
@@ -47,7 +49,17 @@ export async function onRequestGet(context: GigsContext): Promise<Response> {
     }
   }
 
-  const gigs = sortGigsByDate([...scrapedGigs, ...loadManualConcerts()]);
+  let manualText = '';
+  try {
+    const response = await context.env.ASSETS.fetch(
+      new Request(new URL('/concerts.txt', context.request.url))
+    );
+    if (!response.ok) throw new Error(`concerts.txt returned ${response.status}`);
+    manualText = await response.text();
+  } catch (error) {
+    console.error('Failed to load concerts.txt:', error);
+  }
+  const gigs = sortGigsByDate(mergeGigs(loadManualConcerts(manualText), scrapedGigs));
 
   // The merged payload includes fresh manual gigs, so it must not be cached.
   return Response.json(gigs, {

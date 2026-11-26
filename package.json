@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "test:hardening": "tsc -p tests/tsconfig.json && node .next/hardening-tests/tests/hardening.test.js",
     "check:contact": "tsc -p workers/contact/tsconfig.json",
     "test:contact": "node --experimental-strip-types workers/contact/test/contact.test.ts",
     "contact:dev": "cd workers/contact && cf dev",
