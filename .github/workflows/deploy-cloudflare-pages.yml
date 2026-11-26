@@ -26,6 +26,8 @@ jobs:
 
       - name: Build static site
         run: npm run build
+        env:
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Deploy to Cloudflare Pages
         run: npx --yes wrangler@4 pages deploy out --project-name=george-hadow --branch=main
