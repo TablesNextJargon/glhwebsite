@@ -52,9 +52,10 @@ export default function Home() {
         <Logo />
         <Navigation />
 
-        <div style={{
+        <main style={{
           padding: '2rem',
           maxWidth: '800px',
+          width: '100%',
           margin: '0 auto',
           flex: 1,
           display: 'flex',
@@ -62,10 +63,11 @@ export default function Home() {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
+          <h1 className="sr-only">George Hadow — Drummer and Percussionist</h1>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: '1.5rem',
             marginTop: '2rem',
             width: '100%'
@@ -75,7 +77,7 @@ export default function Home() {
             <YouTubeVideo videoId="xkW4NARYq5M" title="kf" />
           </div>
 
-        </div>
+        </main>
       </div>
     </>
   );

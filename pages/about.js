@@ -65,7 +65,7 @@ export default function About() {
 
 
 
-       <div style={{
+       <main style={{
          padding: '2rem',
          fontFamily: 'sans-serif',
          maxWidth: '800px',
@@ -137,7 +137,7 @@ export default function About() {
          </div>
 
 
-       </div>
+       </main>
     </div>
     </>
   );

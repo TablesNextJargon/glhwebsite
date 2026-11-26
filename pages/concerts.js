@@ -56,12 +56,13 @@ export default function ConcertsPage({ upcoming: initialUpcoming, past: initialP
         <Logo />
         <Navigation />
 
-        <div style={{
+        <main style={{
           padding: '2rem',
           fontFamily: 'sans-serif',
           maxWidth: '1000px',
           margin: '0 auto'
         }}>
+          <h1 className="sr-only">Concerts & Performances</h1>
 
           {upcoming.length === 0 && past.length === 0 && (
             <div style={{
@@ -93,7 +94,13 @@ export default function ConcertsPage({ upcoming: initialUpcoming, past: initialP
                       <span className="gig-city">{gig.city}</span>
                     </div>
                     {gig.link && (
-                      <a href={gig.link} className="gig-link" target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={gig.link}
+                        className="gig-link"
+                        aria-label={`Tickets for ${gig.band} at ${gig.venue}, ${gig.city}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         TICKETS
                       </a>
                     )}
@@ -112,21 +119,24 @@ export default function ConcertsPage({ upcoming: initialUpcoming, past: initialP
                 textAlign: 'center'
               }}>Past</h2>
 
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {past.map((gig, idx) => (
-                  <li key={gig.id || `past-${idx}`} style={{
-                    padding: '0.25rem 0',
-                    color: 'var(--secondary-text)',
-                    fontSize: '0.95rem'
-                  }}>
-                    {gig.date} | {gig.band} @ {gig.venue}, {gig.city}
-                  </li>
-                ))}
-              </ul>
+              <details>
+                <summary>Show {past.length} past performances</summary>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  {past.map((gig, idx) => (
+                    <li key={gig.id || `past-${idx}`} style={{
+                      padding: '0.25rem 0',
+                      color: 'var(--secondary-text)',
+                      fontSize: '0.95rem'
+                    }}>
+                      {gig.date} | {gig.band} @ {gig.venue}, {gig.city}
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </div>
           )}
 
-        </div>
+        </main>
       </div>
     </>
   );
