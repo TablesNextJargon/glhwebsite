@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getAllConcerts } from '../lib/concerts';
-import { categorizeGigs } from '../lib/concert-dates';
+import { categorizeGigs, mergeGigs } from '../lib/concert-dates';
 import SEO from '../components/SEO';
 import Logo from '../components/Logo';
 import Navigation from '../components/Navigation';
@@ -23,12 +23,20 @@ export default function ConcertsPage({ upcoming: initialUpcoming, past: initialP
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch('/api/gigs', { signal: controller.signal })
+    fetch('/api/gigs', { signal: controller.signal, cache: 'no-store' })
       .then(response => {
         if (!response.ok) throw new Error('Concert refresh failed');
         return response.json();
       })
-      .then(gigs => setConcerts(categorizeGigs(gigs)))
+      .then(gigs => {
+        if (!Array.isArray(gigs)) return;
+        setConcerts(prev => {
+          // Keep build-time gigs as the source of truth: a stale API payload
+          // must never remove concerts already rendered in the static HTML.
+          const merged = mergeGigs([...prev.upcoming, ...prev.past], gigs);
+          return categorizeGigs(merged);
+        });
+      })
       .catch(error => {
         if (error.name !== 'AbortError') console.error(error);
       });
