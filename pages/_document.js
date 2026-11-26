@@ -10,7 +10,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <body>
         <Main />
