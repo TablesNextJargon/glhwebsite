@@ -34,3 +34,13 @@ yarn-error.log*
 
 # Cache files
 data/concerts-cache.json
+
+# Cloudflare local configuration, build output, and secrets
+.cloudflare/
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+.contact-secrets.json
+
+!.dev.vars.example

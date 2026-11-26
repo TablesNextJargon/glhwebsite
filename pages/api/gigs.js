@@ -2,7 +2,6 @@
 
 import axios from 'axios';
 import path from 'path';
-import sgMail from '@sendgrid/mail';
 
 const cheerio = require('cheerio');
 
@@ -49,40 +48,6 @@ function writeCache(data) {
     console.log('Cache updated');
   } catch (error) {
     console.error('Cache write failed:', error.message);
-  }
-}
-
-async function sendErrorEmail(error) {
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log('SENDGRID_API_KEY not set, skipping error email');
-    return;
-  }
-  try {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    const msg = {
-      to: 'georgehadow@gmail.com',
-      from: {
-        email: 'noreply@georgehadow.com',
-        name: 'George Hadow Website'
-      },
-      subject: 'Concert Scraping Error',
-      html: `
-        <p>Failed to scrape concert data from external sources.</p>
-        <p>Error: ${error.message}</p>
-        <p>Using cached data if available.</p>
-        <p>Time: ${new Date().toISOString()}</p>
-      `,
-      text: `
-Failed to scrape concert data from external sources.
-Error: ${error.message}
-Using cached data if available.
-Time: ${new Date().toISOString()}
-      `.trim()
-    };
-    await sgMail.send(msg);
-    console.log('Error email sent');
-  } catch (emailError) {
-    console.error('Failed to send error email:', emailError.message);
   }
 }
 
@@ -135,7 +100,6 @@ export default async function handler(req, res) {
         }
       } catch (scrapeError) {
         console.error('Scraping failed:', scrapeError.message);
-        await sendErrorEmail(scrapeError);
         // Try cache as fallback
         scrapedGigs = readCache();
         if (!scrapedGigs) {
@@ -184,7 +148,6 @@ export default async function handler(req, res) {
     console.error('Unexpected error in gigs API:', error.message);
     const duration = Date.now() - startTime;
     console.log(`[${new Date().toISOString()}] API request failed in ${duration}ms`);
-    await sendErrorEmail(error);
     return res.status(200).json([{
       date: 'Service temporarily unavailable',
       venue: 'Unable to load concert data',

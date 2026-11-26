@@ -8,10 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "check:contact": "tsc -p workers/contact/tsconfig.json",
+    "test:contact": "node --experimental-strip-types workers/contact/test/contact.test.ts",
+    "contact:dev": "cd workers/contact && cf dev",
+    "contact:build": "cd workers/contact && cf build",
+    "contact:deploy": "cd workers/contact && cf deploy"
   },
   "dependencies": {
-    "@sendgrid/mail": "^8.1.6",
     "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12",
     "next": "^14.0.0",
@@ -19,8 +23,13 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261125.1",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "cf": "^1.0.0-rc.6",
     "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0"
+    "eslint-config-next": "^14.0.0",
+    "typescript": "^6.0.3"
   },
   "keywords": [
     "george-hadow",
@@ -29,5 +38,8 @@
     "scraper"
   ],
   "author": "George Hadow",
-  "license": "MIT"
+  "license": "MIT",
+  "workspaces": [
+    "workers/contact"
+  ]
 }

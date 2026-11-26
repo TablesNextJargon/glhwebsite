@@ -1,4 +1,7 @@
-import { getAllConcerts, categorizeGigs } from '../lib/concerts';
+import { useEffect, useState } from 'react';
+
+import { getAllConcerts } from '../lib/concerts';
+import { categorizeGigs } from '../lib/concert-dates';
 import SEO from '../components/SEO';
 import Logo from '../components/Logo';
 import Navigation from '../components/Navigation';
@@ -12,7 +15,25 @@ export async function generateMetadata() {
   };
 }
 
-export default function ConcertsPage({ upcoming, past }) {
+export default function ConcertsPage({ upcoming: initialUpcoming, past: initialPast }) {
+  const [{ upcoming, past }, setConcerts] = useState({
+    upcoming: initialUpcoming,
+    past: initialPast
+  });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/gigs', { signal: controller.signal })
+      .then(response => {
+        if (!response.ok) throw new Error('Concert refresh failed');
+        return response.json();
+      })
+      .then(gigs => setConcerts(categorizeGigs(gigs)))
+      .catch(error => {
+        if (error.name !== 'AbortError') console.error(error);
+      });
+    return () => controller.abort();
+  }, []);
   return (
     <>
       <SEO
@@ -112,8 +133,7 @@ export async function getStaticProps() {
       props: {
         upcoming,
         past
-      },
-      revalidate: 86400
+      }
     };
   } catch (error) {
     console.error('Error fetching concerts:', error);
@@ -121,8 +141,7 @@ export async function getStaticProps() {
       props: {
         upcoming: [],
         past: []
-      },
-      revalidate: 3600 // Try again in 1 hour if there's an error
+      }
     };
   }
 }

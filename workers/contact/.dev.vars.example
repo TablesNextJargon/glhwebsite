@@ -1,0 +1,5 @@
+# Copy to .dev.vars (gitignored). These are local test values, never production values.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TURNSTILE_HOSTNAMES=localhost,127.0.0.1
+CONTACT_TO=recipient@example.com
+CONTACT_FROM=website@example.com
