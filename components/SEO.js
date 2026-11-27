@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 const SITE_URL = 'https://www.georgehadow.com';
 
-export default function SEO({ title, description, image = '/og-image.jpg' }) {
+export default function SEO({ title, description, image = '/og-image-2026.jpg' }) {
   const router = useRouter();
   const canonicalUrl = `${SITE_URL}${router.pathname}`;
   const imageUrl = /^https?:\/\//.test(image)
